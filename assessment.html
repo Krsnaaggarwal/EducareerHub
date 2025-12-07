@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Assessment Quiz - EduCareer Hub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Include same navigation from index.html -->
+    <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">EduCareer Hub</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Home</a>
+                    <a href="assessment.html" class="nav-link px-4 py-2 rounded-lg text-purple-600 font-medium">Assessment</a>
+                    <a href="colleges.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Colleges</a>
+                    <a href="rankings.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Rankings</a>
+                    <a href="compare.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Compare</a>
+                    <a href="timeline.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Timeline</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Assessment Container -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-display font-bold text-gray-800 mb-4">Find Your Perfect College Match</h1>
+                <p class="text-xl text-gray-600">Answer 10 questions to get personalized college recommendations</p>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+                <div class="flex items-center justify-between mb-3">
+                    <span class="text-sm font-semibold text-gray-600">Progress</span>
+                    <span id="progressText" class="text-sm font-semibold text-purple-600">0/10</span>
+                </div>
+                <div class="progress-bar">
+                    <div id="quizProgress" class="progress-fill" style="width: 0%"></div>
+                </div>
+            </div>
+
+            <!-- Quiz Container -->
+            <div id="quizContainer" class="bg-white rounded-2xl shadow-xl p-8">
+                <!-- Questions will be loaded here -->
+            </div>
+
+            <!-- Results Container -->
+            <div id="resultsContainer" class="hidden">
+                <div class="bg-white rounded-2xl shadow-xl p-8">
+                    <div class="text-center mb-8">
+                        <div class="w-24 h-24 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <i class="fas fa-trophy text-white text-5xl"></i>
+                        </div>
+                        <h2 class="text-4xl font-bold text-gray-800 mb-2">Assessment Complete!</h2>
+                        <p class="text-xl text-gray-600">Here are your personalized college recommendations</p>
+                    </div>
+
+                    <div id="recommendedColleges" class="space-y-6">
+                        <!-- Recommended colleges will be loaded here -->
+                    </div>
+
+                    <div class="flex space-x-4 mt-8">
+                        <button onclick="restartQuiz()" class="flex-1 bg-gray-200 text-gray-800 py-4 px-6 rounded-xl font-bold hover:bg-gray-300 transition">
+                            <i class="fas fa-redo mr-2"></i> Retake Quiz
+                        </button>
+                        <a href="colleges.html" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-500 text-white py-4 px-6 rounded-xl font-bold text-center hover:shadow-xl transition">
+                            <i class="fas fa-university mr-2"></i> Explore All Colleges
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/gamification.js"></script>
+    <script>
+        // Assessment Quiz Logic
+        const questions = [
+            {
+                id: 1,
+                question: "What is your budget for 4-year BTech program?",
+                type: "single",
+                options: [
+                    { value: "low", label: "Under ₹5 Lakhs", weight: 1 },
+                    { value: "medium", label: "₹5-10 Lakhs", weight: 2 },
+                    { value: "high", label: "₹10-20 Lakhs", weight: 3 },
+                    { value: "premium", label: "Above ₹20 Lakhs", weight: 4 }
+                ]
+            },
+            {
+                id: 2,
+                question: "Which location do you prefer?",
+                type: "single",
+                options: [
+                    { value: "north", label: "North India (Delhi, UP, Punjab)", weight: 1 },
+                    { value: "south", label: "South India (Tamil Nadu, Karnataka, Telangana)", weight: 2 },
+                    { value: "west", label: "West India (Maharashtra, Gujarat)", weight: 3 },
+                    { value: "east", label: "East India (West Bengal, Odisha, Bihar)", weight: 4 },
+                    { value: "anywhere", label: "Anywhere in India", weight: 5 }
+                ]
+            },
+            {
+                id: 3,
+                question: "What is your preferred engineering branch?",
+                type: "single",
+                options: [
+                    { value: "cse", label: "Computer Science & Engineering", weight: 1 },
+                    { value: "ece", label: "Electronics & Communication", weight: 2 },
+                    { value: "mech", label: "Mechanical Engineering", weight: 3 },
+                    { value: "civil", label: "Civil Engineering", weight: 4 },
+                    { value: "electrical", label: "Electrical Engineering", weight: 5 },
+                    { value: "other", label: "Other Branches", weight: 6 }
+                ]
+            },
+            {
+                id: 4,
+                question: "What is your expected JEE Main percentile?",
+                type: "single",
+                options: [
+                    { value: "95plus", label: "95+ Percentile (Top 5%)", weight: 5 },
+                    { value: "90-95", label: "90-95 Percentile", weight: 4 },
+                    { value: "85-90", label: "85-90 Percentile", weight: 3 },
+                    { value: "80-85", label: "80-85 Percentile", weight: 2 },
+                    { value: "below80", label: "Below 80 Percentile", weight: 1 }
+                ]
+            },
+            {
+                id: 5,
+                question: "What matters most to you?",
+                type: "single",
+                options: [
+                    { value: "placements", label: "High Placement Packages", weight: 1 },
+                    { value: "research", label: "Research Opportunities", weight: 2 },
+                    { value: "campus", label: "Campus Life & Infrastructure", weight: 3 },
+                    { value: "location", label: "Location & City", weight: 4 },
+                    { value: "brand", label: "College Brand Value", weight: 5 }
+                ]
+            },
+            {
+                id: 6,
+                question: "What type of college do you prefer?",
+                type: "single",
+                options: [
+                    { value: "iit", label: "IIT (Indian Institute of Technology)", weight: 5 },
+                    { value: "nit", label: "NIT (National Institute of Technology)", weight: 4 },
+                    { value: "iiit", label: "IIIT (Indian Institute of Information Technology)", weight: 3 },
+                    { value: "private", label: "Top Private Universities (BITS, VIT, SRM)", weight: 2 },
+                    { value: "state", label: "State Government Colleges", weight: 1 }
+                ]
+            },
+            {
+                id: 7,
+                question: "What is your minimum acceptable placement rate?",
+                type: "single",
+                options: [
+                    { value: "90plus", label: "90% or Above", weight: 5 },
+                    { value: "80-90", label: "80-90%", weight: 4 },
+                    { value: "70-80", label: "70-80%", weight: 3 },
+                    { value: "60-70", label: "60-70%", weight: 2 },
+                    { value: "below60", label: "Below 60%", weight: 1 }
+                ]
+            },
+            {
+                id: 8,
+                question: "Do you want campus hostel facilities?",
+                type: "single",
+                options: [
+                    { value: "must", label: "Must Have - I'm from another state", weight: 5 },
+                    { value: "prefer", label: "Prefer to Have", weight: 3 },
+                    { value: "optional", label: "Optional - I live nearby", weight: 1 }
+                ]
+            },
+            {
+                id: 9,
+                question: "What is your expected average package?",
+                type: "single",
+                options: [
+                    { value: "15plus", label: "₹15+ LPA", weight: 5 },
+                    { value: "10-15", label: "₹10-15 LPA", weight: 4 },
+                    { value: "7-10", label: "₹7-10 LPA", weight: 3 },
+                    { value: "5-7", label: "₹5-7 LPA", weight: 2 },
+                    { value: "below5", label: "Below ₹5 LPA", weight: 1 }
+                ]
+            },
+            {
+                id: 10,
+                question: "Are you planning for higher studies (MS/MBA)?",
+                type: "single",
+                options: [
+                    { value: "yes", label: "Yes, definitely planning", weight: 5 },
+                    { value: "maybe", label: "Maybe, keeping options open", weight: 3 },
+                    { value: "no", label: "No, want to start working immediately", weight: 1 }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+
+        function loadQuestion() {
+            const question = questions[currentQuestion];
+            const container = document.getElementById('quizContainer');
+            
+            container.innerHTML = `
+                <div class="animate-fade-in-up">
+                    <h3 class="text-2xl font-bold text-gray-800 mb-6">
+                        Question ${currentQuestion + 1} of ${questions.length}
+                    </h3>
+                    <p class="text-xl text-gray-700 mb-8">${question.question}</p>
+                    
+                    <div class="space-y-3">
+                        ${question.options.map((option, index) => `
+                            <label class="block">
+                                <input type="radio" name="question${question.id}" value="${option.value}" 
+                                       class="hidden peer" onchange="selectAnswer('${option.value}', ${option.weight})">
+                                <div class="p-4 border-2 border-gray-200 rounded-xl cursor-pointer transition-all 
+                                            peer-checked:border-purple-600 peer-checked:bg-purple-50 
+                                            hover:border-purple-300 hover:bg-purple-25">
+                                    <div class="flex items-center space-x-3">
+                                        <div class="w-6 h-6 rounded-full border-2 border-gray-300 peer-checked:border-purple-600 
+                                                    peer-checked:bg-purple-600 flex items-center justify-center">
+                                            <i class="fas fa-check text-white text-xs hidden peer-checked:block"></i>
+                                        </div>
+                                        <span class="font-medium text-gray-700">${option.label}</span>
+                                    </div>
+                                </div>
+                            </label>
+                        `).join('')}
+                    </div>
+
+                    <div class="flex space-x-4 mt-8">
+                        ${currentQuestion > 0 ? `
+                            <button onclick="previousQuestion()" 
+                                    class="bg-gray-200 text-gray-700 px-6 py-3 rounded-xl font-semibold hover:bg-gray-300 transition">
+                                <i class="fas fa-arrow-left mr-2"></i> Previous
+                            </button>
+                        ` : ''}
+                        <button id="nextBtn" onclick="nextQuestion()" disabled
+                                class="flex-1 bg-gradient-to-r from-purple-600 to-pink-500 text-white px-6 py-3 rounded-xl font-semibold 
+                                       hover:shadow-lg transition disabled:opacity-50 disabled:cursor-not-allowed">
+                            ${currentQuestion === questions.length - 1 ? 'View Results' : 'Next'} 
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            updateProgress();
+        }
+
+        function selectAnswer(value, weight) {
+            answers[currentQuestion] = { value, weight };
+            document.getElementById('nextBtn').disabled = false;
+        }
+
+        function nextQuestion() {
+            if (currentQuestion < questions.length - 1) {
+                currentQuestion++;
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                loadQuestion();
+            }
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('quizProgress').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `${currentQuestion + 1}/${questions.length}`;
+        }
+
+        async function showResults() {
+            document.getElementById('quizContainer').classList.add('hidden');
+            document.getElementById('resultsContainer').classList.remove('hidden');
+            
+            // Track achievement
+            trackAchievement('assessment_completed');
+            
+            // Fetch colleges and calculate matches
+            const response = await fetch('tables/colleges?limit=20');
+            const data = await response.json();
+            const colleges = data.data || [];
+            
+            // Simple scoring algorithm
+            const scoredColleges = colleges.map(college => {
+                let score = college.nirf_score; // Base score from NIRF
+                
+                // Budget consideration
+                const budgetAnswer = answers[0];
+                if (budgetAnswer && budgetAnswer.weight >= 3 && college.total_fee <= 10) {
+                    score += 10;
+                } else if (budgetAnswer && budgetAnswer.weight <= 2 && college.total_fee <= 6) {
+                    score += 15;
+                }
+                
+                // Placement consideration
+                if (college.placement_rate >= 90) score += 10;
+                if (college.avg_package >= 15) score += 10;
+                
+                return { ...college, matchScore: score };
+            });
+            
+            // Sort by match score
+            scoredColleges.sort((a, b) => b.matchScore - a.matchScore);
+            
+            // Display top 5 recommendations
+            const container = document.getElementById('recommendedColleges');
+            container.innerHTML = scoredColleges.slice(0, 5).map((college, index) => `
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 p-6 rounded-xl border-2 border-purple-200">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <span class="text-white font-bold text-2xl">#${index + 1}</span>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">${college.short_name}</h3>
+                            <p class="text-gray-600 mb-4">${college.city}, ${college.state}</p>
+                            
+                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <p class="text-sm text-gray-600">NIRF Rank</p>
+                                    <p class="font-bold text-purple-600">#${college.nirf_rank}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Avg Package</p>
+                                    <p class="font-bold text-green-600">₹${college.avg_package} LPA</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Total Fee</p>
+                                    <p class="font-bold text-blue-600">₹${college.total_fee} Lakhs</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Placement Rate</p>
+                                    <p class="font-bold text-indigo-600">${college.placement_rate}%</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex space-x-2">
+                                <a href="college-detail.html?id=${college.id}" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-4 py-2 rounded-lg font-semibold hover:shadow-lg transition">
+                                    View Details
+                                </a>
+                                <button onclick="toggleFavorite('${college.id}')" class="bg-white border-2 border-purple-600 text-purple-600 px-4 py-2 rounded-lg font-semibold hover:bg-purple-50 transition">
+                                    <i class="fas fa-heart"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            showToast('Assessment completed! Check your personalized recommendations', 'success');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            document.getElementById('quizContainer').classList.remove('hidden');
+            document.getElementById('resultsContainer').classList.add('hidden');
+            loadQuestion();
+        }
+
+        // Initialize quiz
+        loadQuestion();
+    </script>
+</body>
+</html>

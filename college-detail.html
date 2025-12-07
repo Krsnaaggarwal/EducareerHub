@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Details - EduCareer Hub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">EduCareer Hub</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Home</a>
+                    <a href="colleges.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Back to Colleges</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <div id="collegeDetail" class="bg-white rounded-2xl shadow-xl p-8">
+            <!-- College details will be loaded here -->
+            <div class="text-center py-12">
+                <div class="spinner mx-auto"></div>
+                <p class="mt-4 text-gray-600">Loading college details...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        async function loadCollegeDetail() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const collegeId = urlParams.get('id');
+            
+            if (!collegeId) {
+                window.location.href = 'colleges.html';
+                return;
+            }
+            
+            const response = await fetch(`tables/colleges/${collegeId}`);
+            const college = await response.json();
+            
+            const container = document.getElementById('collegeDetail');
+            container.innerHTML = `
+                <div class="mb-8">
+                    <div class="flex items-start justify-between mb-6">
+                        <div>
+                            <h1 class="text-4xl font-bold text-gray-800 mb-2">${college.name}</h1>
+                            <p class="text-xl text-gray-600"><i class="fas fa-map-marker-alt mr-2"></i>${college.city}, ${college.state}</p>
+                        </div>
+                        <div class="text-right">
+                            <div class="text-5xl font-bold text-purple-600 mb-2">#${college.nirf_rank}</div>
+                            <p class="text-gray-600">NIRF Rank 2024</p>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+                        <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-6 rounded-xl">
+                            <p class="text-sm text-gray-600 mb-2">NIRF Score</p>
+                            <p class="text-3xl font-bold text-purple-600">${college.nirf_score}</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-xl">
+                            <p class="text-sm text-gray-600 mb-2">Avg Package</p>
+                            <p class="text-3xl font-bold text-green-600">₹${college.avg_package} LPA</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-xl">
+                            <p class="text-sm text-gray-600 mb-2">Total Fee</p>
+                            <p class="text-3xl font-bold text-blue-600">₹${college.total_fee} L</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-orange-50 to-red-50 p-6 rounded-xl">
+                            <p class="text-sm text-gray-600 mb-2">Placement Rate</p>
+                            <p class="text-3xl font-bold text-orange-600">${college.placement_rate}%</p>
+                        </div>
+                    </div>
+                    
+                    <div class="prose max-w-none mb-8">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">About</h2>
+                        <p class="text-gray-700">${college.description}</p>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Key Highlights</h3>
+                            <ul class="space-y-2">
+                                ${(college.highlights || []).map(h => `
+                                    <li class="flex items-center space-x-2">
+                                        <i class="fas fa-star text-yellow-500"></i>
+                                        <span>${h}</span>
+                                    </li>
+                                `).join('')}
+                            </ul>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-gray-800 mb-4">Top Recruiters</h3>
+                            <div class="flex flex-wrap gap-2">
+                                ${(college.top_recruiters || []).map(r => `
+                                    <span class="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-semibold">${r}</span>
+                                `).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                        <div>
+                            <h4 class="font-bold text-gray-700 mb-2">Highest Package</h4>
+                            <p class="text-2xl font-bold text-green-600">₹${college.highest_package} LPA</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-700 mb-2">Median Package</h4>
+                            <p class="text-2xl font-bold text-blue-600">₹${college.median_package} LPA</p>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-700 mb-2">Campus Area</h4>
+                            <p class="text-2xl font-bold text-purple-600">${college.campus_area} Acres</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex space-x-4">
+                        <button onclick="toggleFavorite('${college.id}')" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-8 py-3 rounded-xl font-bold hover:shadow-xl transition">
+                            <i class="fas fa-heart mr-2"></i> Add to Favorites
+                        </button>
+                        <button onclick="addToCompare('${college.id}')" class="bg-blue-600 text-white px-8 py-3 rounded-xl font-bold hover:shadow-xl transition">
+                            <i class="fas fa-balance-scale mr-2"></i> Compare
+                        </button>
+                        <a href="colleges.html" class="bg-gray-200 text-gray-700 px-8 py-3 rounded-xl font-bold hover:bg-gray-300 transition">
+                            <i class="fas fa-arrow-left mr-2"></i> Back
+                        </a>
+                    </div>
+                </div>
+            `;
+            
+            // Track page view
+            let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+            if (!recentlyViewed.includes(collegeId)) {
+                recentlyViewed.unshift(collegeId);
+                recentlyViewed = recentlyViewed.slice(0, 10);
+                localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
+            }
+        }
+        
+        function addToCompare(id) {
+            let compareList = JSON.parse(localStorage.getItem('compareList') || '[]');
+            if (!compareList.includes(id)) {
+                compareList.push(id);
+                localStorage.setItem('compareList', JSON.stringify(compareList));
+                showToast('Added to comparison list', 'success');
+            } else {
+                showToast('Already in comparison list', 'info');
+            }
+        }
+        
+        loadCollegeDetail();
+    </script>
+</body>
+</html>

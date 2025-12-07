@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Timeline - EduCareer Hub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">EduCareer Hub</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Home</a>
+                    <a href="assessment.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Assessment</a>
+                    <a href="colleges.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Colleges</a>
+                    <a href="rankings.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Rankings</a>
+                    <a href="compare.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Compare</a>
+                    <a href="timeline.html" class="nav-link px-4 py-2 rounded-lg text-purple-600 font-medium">Timeline</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-display font-bold text-gray-800 mb-4">Exam Timeline 2025</h1>
+            <p class="text-xl text-gray-600">Never miss important exam dates with live countdowns</p>
+        </div>
+
+        <div id="timelineContainer" class="space-y-6">
+            <!-- Timeline will be loaded from main.js -->
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script>
+        async function loadTimeline() {
+            const response = await fetch('tables/exams?limit=10');
+            const data = await response.json();
+            const exams = data.data || [];
+            
+            const container = document.getElementById('timelineContainer');
+            container.innerHTML = exams.map((exam, index) => `
+                <div class="bg-white rounded-2xl shadow-lg p-6 animate-fade-in-up" style="animation-delay: ${index * 0.1}s">
+                    <div class="flex items-start space-x-6">
+                        <div class="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-calendar-alt text-white text-3xl"></i>
+                        </div>
+                        <div class="flex-1">
+                            <h3 class="text-2xl font-bold text-gray-800 mb-2">${exam.name}</h3>
+                            <p class="text-gray-600 mb-4">${exam.full_name}</p>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div>
+                                    <p class="text-sm text-gray-600">Exam Date</p>
+                                    <p class="font-bold text-purple-600">${new Date(exam.exam_date).toLocaleDateString('en-IN', {year: 'numeric', month: 'long', day: 'numeric'})}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Registration Ends</p>
+                                    <p class="font-bold text-red-600">${new Date(exam.registration_end).toLocaleDateString('en-IN', {year: 'numeric', month: 'long', day: 'numeric'})}</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-600">Total Registered</p>
+                                    <p class="font-bold text-green-600">${(exam.total_registrations / 100000).toFixed(2)} Lakh</p>
+                                </div>
+                            </div>
+                            <div class="countdown-timer" data-exam-date="${exam.exam_date}">
+                                <div class="countdown-item">
+                                    <span class="countdown-value days">00</span>
+                                    <span class="countdown-label">Days</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-value hours">00</span>
+                                    <span class="countdown-label">Hours</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-value minutes">00</span>
+                                    <span class="countdown-label">Minutes</span>
+                                </div>
+                                <div class="countdown-item">
+                                    <span class="countdown-value seconds">00</span>
+                                    <span class="countdown-label">Seconds</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            updateCountdowns();
+            setInterval(updateCountdowns, 1000);
+        }
+        
+        loadTimeline();
+    </script>
+</body>
+</html>

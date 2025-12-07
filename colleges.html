@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engineering Colleges Directory - EduCareer Hub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="font-sans bg-gray-50">
+    <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-40">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">EduCareer Hub</span>
+                </a>
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Home</a>
+                    <a href="assessment.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Assessment</a>
+                    <a href="colleges.html" class="nav-link px-4 py-2 rounded-lg text-purple-600 font-medium">Colleges</a>
+                    <a href="rankings.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Rankings</a>
+                    <a href="compare.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Compare</a>
+                    <a href="timeline.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Timeline</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-display font-bold text-gray-800 mb-4">Engineering Colleges Directory</h1>
+            <p class="text-xl text-gray-600">Explore 20+ top NIRF ranked institutions with advanced filters</p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <!-- Filters Sidebar -->
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-2xl shadow-lg p-6 sticky top-24">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4">Filters</h3>
+                    
+                    <div class="space-y-6">
+                        <div>
+                            <label class="font-semibold text-gray-700 mb-2 block">Search</label>
+                            <input type="text" id="searchInput" placeholder="Search colleges..." 
+                                   class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:outline-none">
+                        </div>
+
+                        <div>
+                            <label class="font-semibold text-gray-700 mb-2 block">College Type</label>
+                            <select id="typeFilter" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:outline-none">
+                                <option value="all">All Types</option>
+                                <option value="IIT">IIT</option>
+                                <option value="NIT">NIT</option>
+                                <option value="Private">Private</option>
+                                <option value="Government">Government</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="font-semibold text-gray-700 mb-2 block">State</label>
+                            <select id="stateFilter" class="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:outline-none">
+                                <option value="all">All States</option>
+                                <option value="Tamil Nadu">Tamil Nadu</option>
+                                <option value="Delhi">Delhi</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="West Bengal">West Bengal</option>
+                                <option value="Karnataka">Karnataka</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="font-semibold text-gray-700 mb-2 block">Fee Range</label>
+                            <input type="range" id="feeRange" min="0" max="25" value="25" class="w-full">
+                            <div class="flex justify-between text-sm text-gray-600 mt-1">
+                                <span>₹0L</span>
+                                <span id="feeValue">₹25L</span>
+                            </div>
+                        </div>
+
+                        <button onclick="applyFilters()" class="w-full bg-gradient-to-r from-purple-600 to-pink-500 text-white py-3 rounded-lg font-bold hover:shadow-lg transition">
+                            Apply Filters
+                        </button>
+                        <button onclick="resetFilters()" class="w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-semibold hover:bg-gray-300 transition">
+                            Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Colleges Grid -->
+            <div class="lg:col-span-3">
+                <div class="flex items-center justify-between mb-6">
+                    <p class="text-gray-600"><span id="resultCount">20</span> colleges found</p>
+                    <select id="sortBy" class="px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-purple-600 focus:outline-none">
+                        <option value="rank">Sort by Rank</option>
+                        <option value="fees">Sort by Fees</option>
+                        <option value="package">Sort by Package</option>
+                        <option value="placement">Sort by Placement Rate</option>
+                    </select>
+                </div>
+
+                <div id="collegesGrid" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Colleges will be loaded dynamically -->
+                </div>
+
+                <div class="text-center mt-12">
+                    <button onclick="loadMore()" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-8 py-4 rounded-xl font-bold hover:shadow-xl transition">
+                        <i class="fas fa-plus mr-2"></i> Load More Colleges
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/main.js"></script>
+    <script src="js/gamification.js"></script>
+    <script>
+        let allColleges = [];
+        let filteredColleges = [];
+
+        async function loadColleges() {
+            const response = await fetch('tables/colleges?limit=100');
+            const data = await response.json();
+            allColleges = data.data || [];
+            filteredColleges = [...allColleges];
+            renderColleges();
+        }
+
+        function renderColleges() {
+            const grid = document.getElementById('collegesGrid');
+            grid.innerHTML = filteredColleges.map(college => `
+                <div class="college-card relative">
+                    <div class="college-card-rank">#${college.nirf_rank}</div>
+                    <div class="college-card-badge">${college.type}</div>
+                    
+                    <div class="h-40 bg-gradient-to-br from-purple-100 to-pink-100 flex items-center justify-center">
+                        <i class="fas fa-university text-5xl text-purple-600 opacity-50"></i>
+                    </div>
+                    
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold text-gray-800 mb-2">${college.short_name}</h3>
+                        <p class="text-gray-600 mb-4"><i class="fas fa-map-marker-alt mr-1"></i>${college.city}, ${college.state}</p>
+                        
+                        <div class="grid grid-cols-2 gap-3 mb-4 text-sm">
+                            <div><span class="text-gray-600">Score:</span> <span class="font-bold text-purple-600">${college.nirf_score}</span></div>
+                            <div><span class="text-gray-600">Package:</span> <span class="font-bold text-green-600">₹${college.avg_package}L</span></div>
+                            <div><span class="text-gray-600">Fee:</span> <span class="font-bold text-blue-600">₹${college.total_fee}L</span></div>
+                            <div><span class="text-gray-600">Placement:</span> <span class="font-bold text-indigo-600">${college.placement_rate}%</span></div>
+                        </div>
+                        
+                        <div class="flex space-x-2">
+                            <a href="college-detail.html?id=${college.id}" class="flex-1 bg-gradient-to-r from-purple-600 to-pink-500 text-white py-2 text-center rounded-lg font-semibold hover:shadow-lg transition">
+                                View
+                            </a>
+                            <button onclick="toggleFavorite('${college.id}')" class="bg-purple-100 text-purple-600 px-4 rounded-lg hover:bg-purple-200 transition">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                            <button onclick="addToCompare('${college.id}')" class="bg-blue-100 text-blue-600 px-4 rounded-lg hover:bg-blue-200 transition">
+                                <i class="fas fa-balance-scale"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.getElementById('resultCount').textContent = filteredColleges.length;
+        }
+
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const type = document.getElementById('typeFilter').value;
+            const state = document.getElementById('stateFilter').value;
+            const maxFee = parseInt(document.getElementById('feeRange').value);
+            
+            filteredColleges = allColleges.filter(college => {
+                const matchesSearch = college.name.toLowerCase().includes(search) || 
+                                    college.short_name.toLowerCase().includes(search);
+                const matchesType = type === 'all' || college.type === type;
+                const matchesState = state === 'all' || college.state === state;
+                const matchesFee = college.total_fee <= maxFee;
+                
+                return matchesSearch && matchesType && matchesState && matchesFee;
+            });
+            
+            renderColleges();
+            showToast(`Found ${filteredColleges.length} colleges`, 'success');
+        }
+
+        function resetFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('typeFilter').value = 'all';
+            document.getElementById('stateFilter').value = 'all';
+            document.getElementById('feeRange').value = '25';
+            document.getElementById('feeValue').textContent = '₹25L';
+            filteredColleges = [...allColleges];
+            renderColleges();
+        }
+
+        function addToCompare(id) {
+            let compareList = JSON.parse(localStorage.getItem('compareList') || '[]');
+            if (!compareList.includes(id)) {
+                compareList.push(id);
+                localStorage.setItem('compareList', JSON.stringify(compareList));
+                showToast('Added to comparison list', 'success');
+            } else {
+                showToast('Already in comparison list', 'info');
+            }
+        }
+
+        document.getElementById('feeRange').addEventListener('input', (e) => {
+            document.getElementById('feeValue').textContent = `₹${e.target.value}L`;
+        });
+
+        document.getElementById('sortBy').addEventListener('change', (e) => {
+            const sortBy = e.target.value;
+            if (sortBy === 'rank') {
+                filteredColleges.sort((a, b) => a.nirf_rank - b.nirf_rank);
+            } else if (sortBy === 'fees') {
+                filteredColleges.sort((a, b) => a.total_fee - b.total_fee);
+            } else if (sortBy === 'package') {
+                filteredColleges.sort((a, b) => b.avg_package - a.avg_package);
+            } else if (sortBy === 'placement') {
+                filteredColleges.sort((a, b) => b.placement_rate - a.placement_rate);
+            }
+            renderColleges();
+        });
+
+        loadColleges();
+    </script>
+</body>
+</html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EduCareer Hub - Your complete guide to engineering college admissions, NIRF rankings, JEE preparation, and career planning">
+    <meta name="keywords" content="engineering colleges, IIT, NIT, JEE Main, JEE Advanced, NIRF rankings, college admissions">
+    <title>EduCareer Hub - Find Your Perfect Engineering College</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#8B5CF6',
+                        secondary: '#6366F1',
+                        accent: '#EC4899',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+</head>
+<body class="font-sans bg-gray-50">
+    
+    <!-- Progress Bar -->
+    <div id="progressBar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-purple-600 via-pink-500 to-indigo-600 z-50 transition-all duration-300" style="width: 0%"></div>
+    
+    <!-- Navigation -->
+    <nav id="navbar" class="bg-white shadow-lg sticky top-0 z-40 transition-all duration-300">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-graduation-cap text-white text-xl"></i>
+                    </div>
+                    <span class="font-display font-bold text-xl bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">EduCareer Hub</span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="index.html" class="nav-link px-4 py-2 rounded-lg text-purple-600 font-medium">Home</a>
+                    <a href="assessment.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Assessment</a>
+                    <a href="colleges.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Colleges</a>
+                    <a href="rankings.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Rankings</a>
+                    <a href="compare.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Compare</a>
+                    <a href="timeline.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Timeline</a>
+                    <a href="resources.html" class="nav-link px-4 py-2 rounded-lg hover:bg-purple-50 transition">Resources</a>
+                </div>
+                
+                <!-- User Progress Badge -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <div id="userProgress" class="flex items-center space-x-2 bg-gradient-to-r from-purple-100 to-pink-100 px-4 py-2 rounded-full">
+                        <i class="fas fa-trophy text-yellow-500"></i>
+                        <span class="text-sm font-semibold text-purple-700">Level <span id="userLevel">1</span></span>
+                    </div>
+                    <button id="notificationBtn" class="relative p-2 hover:bg-gray-100 rounded-lg transition">
+                        <i class="fas fa-bell text-gray-600"></i>
+                        <span id="notificationBadge" class="absolute top-0 right-0 w-4 h-4 bg-red-500 rounded-full text-xs text-white flex items-center justify-center hidden">0</span>
+                    </button>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuBtn" class="md:hidden p-2 rounded-lg hover:bg-gray-100">
+                    <i class="fas fa-bars text-xl text-gray-700"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-4 space-y-2">
+                <a href="index.html" class="block px-4 py-2 rounded-lg bg-purple-50 text-purple-600 font-medium">Home</a>
+                <a href="assessment.html" class="block px-4 py-2 rounded-lg hover:bg-gray-100 transition">Assessment</a>
+                <a href="colleges.html" class="block px-4 py-2 rounded-lg hover:bg-gray-100 transition">Colleges</a>
+                <a href="rankings.html" class="block px-4 py-2 rounded-lg hover:bg-gray-100 transition">Rankings</a>
+                <a href="compare.html" class="block px-4 py-2 rounded-lg hover:bg-gray-100 transition">Compare</a>
+                <a href="timeline.html" class="block px-4 py-2 rounded-lg hover:bg-gray-100 transition">Timeline</a>
+                <a href="resources.html" class="block px-4 py-2 rounded-lg hover:bg-gray-100 transition">Resources</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-purple-600 via-indigo-600 to-pink-600 text-white overflow-hidden">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-20 left-20 w-64 h-64 bg-white rounded-full mix-blend-overlay filter blur-xl animate-blob"></div>
+            <div class="absolute top-40 right-20 w-64 h-64 bg-pink-300 rounded-full mix-blend-overlay filter blur-xl animate-blob animation-delay-2000"></div>
+            <div class="absolute bottom-20 left-40 w-64 h-64 bg-indigo-300 rounded-full mix-blend-overlay filter blur-xl animate-blob animation-delay-4000"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 py-20 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-display font-bold mb-6 animate-fade-in-up">
+                    Find Your Perfect <span class="text-yellow-300">Engineering College</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-purple-100 animate-fade-in-up animation-delay-200">
+                    AI-powered college recommendations based on your preferences, budget, and career goals
+                </p>
+                
+                <!-- Quick Search -->
+                <div class="bg-white rounded-2xl shadow-2xl p-3 flex flex-col md:flex-row gap-3 mb-12 animate-fade-in-up animation-delay-400">
+                    <input type="text" id="quickSearch" placeholder="Search colleges, exams, courses..." class="flex-1 px-6 py-4 rounded-xl text-gray-800 text-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                    <button onclick="performQuickSearch()" class="bg-gradient-to-r from-purple-600 to-pink-500 hover:from-purple-700 hover:to-pink-600 text-white px-8 py-4 rounded-xl font-semibold transition transform hover:scale-105 shadow-lg">
+                        <i class="fas fa-search mr-2"></i> Search
+                    </button>
+                </div>
+                
+                <!-- CTA Buttons -->
+                <div class="flex flex-col sm:flex-row gap-4 justify-center animate-fade-in-up animation-delay-600">
+                    <a href="assessment.html" class="bg-white text-purple-600 px-8 py-4 rounded-xl font-bold text-lg hover:bg-gray-100 transition transform hover:scale-105 shadow-xl">
+                        <i class="fas fa-clipboard-list mr-2"></i> Take Assessment Quiz
+                    </a>
+                    <a href="colleges.html" class="bg-purple-800 bg-opacity-50 backdrop-blur-sm border-2 border-white text-white px-8 py-4 rounded-xl font-bold text-lg hover:bg-opacity-70 transition transform hover:scale-105">
+                        <i class="fas fa-university mr-2"></i> Explore Colleges
+                    </a>
+                </div>
+                
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 animate-fade-in-up animation-delay-800">
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-yellow-300 counter" data-target="15.39">0</div>
+                        <div class="text-sm text-purple-100">Lakh JEE Registrations</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-yellow-300 counter" data-target="300">0</div>
+                        <div class="text-sm text-purple-100">+ NIRF Ranked Colleges</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-yellow-300 counter" data-target="72">0</div>
+                        <div class="text-sm text-purple-100">% Employability Rate</div>
+                    </div>
+                    <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-xl p-4 border border-white border-opacity-20">
+                        <div class="text-3xl font-bold text-yellow-300 counter" data-target="14.90">0</div>
+                        <div class="text-sm text-purple-100">Lakh Engineering Seats</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Wave Divider -->
+        <div class="absolute bottom-0 left-0 right-0">
+            <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="#F9FAFB"/>
+            </svg>
+        </div>
+    </section>
+    
+    <!-- Live Statistics Section -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-display font-bold text-gray-800 mb-4">Engineering Education in India 2024-25</h2>
+                <p class="text-xl text-gray-600">Real-time statistics and insights from official sources</p>
+            </div>
+            
+            <div id="statsContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Stats will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Colleges Carousel -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-8">
+                <div>
+                    <h2 class="text-4xl font-display font-bold text-gray-800 mb-2">Top NIRF Ranked Colleges</h2>
+                    <p class="text-xl text-gray-600">Explore India's premier engineering institutions</p>
+                </div>
+                <a href="rankings.html" class="hidden md:flex items-center space-x-2 text-purple-600 hover:text-purple-700 font-semibold">
+                    <span>View All Rankings</span>
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+            
+            <div id="featuredColleges" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Featured colleges will be loaded dynamically -->
+            </div>
+            
+            <div class="text-center mt-8">
+                <a href="colleges.html" class="inline-block bg-gradient-to-r from-purple-600 to-pink-500 text-white px-8 py-4 rounded-xl font-bold text-lg hover:shadow-xl transition transform hover:scale-105">
+                    <i class="fas fa-university mr-2"></i> Explore All Colleges
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Quick Actions -->
+    <section class="py-16 bg-gradient-to-br from-purple-50 to-pink-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-display font-bold text-gray-800 mb-4">Quick Actions</h2>
+                <p class="text-xl text-gray-600">Everything you need for your college journey</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="assessment.html" class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-blue-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fas fa-clipboard-list text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Take Assessment</h3>
+                    <p class="text-gray-600">Find colleges matching your profile</p>
+                </a>
+                
+                <a href="compare.html" class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-green-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fas fa-balance-scale text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Compare Colleges</h3>
+                    <p class="text-gray-600">Side-by-side comparison tool</p>
+                </a>
+                
+                <a href="timeline.html" class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fas fa-calendar-alt text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Exam Timeline</h3>
+                    <p class="text-gray-600">Never miss an important date</p>
+                </a>
+                
+                <a href="resources.html" class="group bg-white p-8 rounded-2xl shadow-lg hover:shadow-2xl transition transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-purple-600 rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition">
+                        <i class="fas fa-book text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-2">Resources</h3>
+                    <p class="text-gray-600">Study materials & tips</p>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Exam Countdown -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-display font-bold text-gray-800 mb-4">Upcoming Exams</h2>
+                <p class="text-xl text-gray-600">Stay prepared with live countdown timers</p>
+            </div>
+            
+            <div id="examCountdown" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Exam countdowns will be loaded dynamically -->
+            </div>
+        </div>
+    </section>
+    
+    <!-- Placement Trends Chart -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-display font-bold text-gray-800 mb-4">Placement Trends</h2>
+                <p class="text-xl text-gray-600">Average package trends of top engineering colleges</p>
+            </div>
+            
+            <div class="bg-white rounded-2xl shadow-xl p-8">
+                <canvas id="placementChart" style="height: 400px;"></canvas>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Success Stories -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-display font-bold text-gray-800 mb-4">Success Stories</h2>
+                <p class="text-xl text-gray-600">Hear from students who found their perfect college</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            RS
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Rahul Sharma</h4>
+                            <p class="text-gray-600">IIT Delhi, CSE '24</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-700 italic">"The assessment quiz helped me understand my priorities. Got into IIT Delhi and now working at Microsoft with ₹45 LPA package!"</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            PK
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Priya Kumari</h4>
+                            <p class="text-gray-600">NIT Trichy, ECE '23</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-700 italic">"College comparison tool made my decision easy. NIT Trichy was perfect for my budget and career goals. Placed at Intel!"</p>
+                </div>
+                
+                <div class="bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
+                            AP
+                        </div>
+                        <div class="ml-4">
+                            <h4 class="font-bold text-lg">Ankit Patel</h4>
+                            <p class="text-gray-600">BITS Pilani, CS '22</p>
+                        </div>
+                    </div>
+                    <div class="flex mb-3">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                    <p class="text-gray-700 italic">"Timeline feature kept me on track. Never missed any important date. Now at Amazon as SDE-2 earning ₹38 LPA!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-br from-purple-600 to-pink-600 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl font-display font-bold mb-4">Stay Updated</h2>
+                <p class="text-xl mb-8 text-purple-100">Get exam alerts, admission updates, and career tips directly in your inbox</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" id="newsletterEmail" placeholder="Enter your email" class="flex-1 px-6 py-4 rounded-xl text-gray-800 focus:outline-none focus:ring-4 focus:ring-white">
+                    <button onclick="subscribeNewsletter()" class="bg-white text-purple-600 px-8 py-4 rounded-xl font-bold hover:bg-gray-100 transition transform hover:scale-105">
+                        Subscribe
+                    </button>
+                </div>
+                
+                <p class="text-sm text-purple-200 mt-4">
+                    <i class="fas fa-lock mr-1"></i> We respect your privacy. Unsubscribe anytime.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-gradient-to-br from-purple-600 to-pink-500 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-graduation-cap text-white"></i>
+                        </div>
+                        <span class="font-display font-bold text-xl text-white">EduCareer Hub</span>
+                    </div>
+                    <p class="text-gray-400">Your trusted partner in engineering career planning and college admissions.</p>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="colleges.html" class="hover:text-purple-400 transition">Colleges</a></li>
+                        <li><a href="rankings.html" class="hover:text-purple-400 transition">Rankings</a></li>
+                        <li><a href="assessment.html" class="hover:text-purple-400 transition">Assessment</a></li>
+                        <li><a href="timeline.html" class="hover:text-purple-400 transition">Exam Timeline</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-white mb-4">Resources</h3>
+                    <ul class="space-y-2">
+                        <li><a href="resources.html" class="hover:text-purple-400 transition">Study Materials</a></li>
+                        <li><a href="resources.html#success" class="hover:text-purple-400 transition">Success Stories</a></li>
+                        <li><a href="resources.html#tips" class="hover:text-purple-400 transition">Preparation Tips</a></li>
+                        <li><a href="compare.html" class="hover:text-purple-400 transition">Compare Colleges</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-bold text-white mb-4">Connect With Us</h3>
+                    <div class="flex space-x-4 mb-4">
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-gray-800 rounded-lg flex items-center justify-center hover:bg-purple-600 transition">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                    <p class="text-sm text-gray-400">Follow us for daily updates and tips</p>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p class="text-gray-400">&copy; 2024-25 EduCareer Hub. All rights reserved. | <a href="#" class="hover:text-purple-400">Privacy Policy</a> | <a href="#" class="hover:text-purple-400">Terms of Service</a></p>
+                <p class="text-sm text-gray-500 mt-2">Data sources: NIRF 2024, AICTE, NTA JEE Official</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Chat Widget -->
+    <button id="chatWidget" class="fixed bottom-6 right-6 w-16 h-16 bg-gradient-to-br from-purple-600 to-pink-500 rounded-full flex items-center justify-center text-white shadow-2xl hover:scale-110 transition transform z-50">
+        <i class="fas fa-comments text-2xl"></i>
+    </button>
+    
+    <!-- Chat Box -->
+    <div id="chatBox" class="hidden fixed bottom-24 right-6 w-96 bg-white rounded-2xl shadow-2xl z-50">
+        <div class="bg-gradient-to-r from-purple-600 to-pink-500 text-white p-4 rounded-t-2xl flex items-center justify-between">
+            <div>
+                <h3 class="font-bold">EduBot Assistant</h3>
+                <p class="text-xs text-purple-100">Online - Instant Reply</p>
+            </div>
+            <button onclick="closeChatBox()" class="hover:bg-white hover:bg-opacity-20 rounded-lg p-2">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="chatMessages" class="h-96 overflow-y-auto p-4 space-y-3 bg-gray-50">
+            <div class="flex items-start space-x-2">
+                <div class="w-8 h-8 bg-purple-600 rounded-full flex items-center justify-center text-white flex-shrink-0">
+                    <i class="fas fa-robot text-sm"></i>
+                </div>
+                <div class="bg-white p-3 rounded-lg shadow">
+                    <p class="text-sm">Hi! I'm EduBot. How can I help you today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t">
+            <div class="flex space-x-2">
+                <input type="text" id="chatInput" placeholder="Type your question..." class="flex-1 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+                <button onclick="sendChatMessage()" class="bg-gradient-to-r from-purple-600 to-pink-500 text-white px-6 py-2 rounded-lg hover:shadow-lg transition">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Notification Panel -->
+    <div id="notificationPanel" class="hidden fixed top-20 right-6 w-96 bg-white rounded-2xl shadow-2xl z-50 max-h-96 overflow-y-auto">
+        <div class="p-4 border-b flex items-center justify-between">
+            <h3 class="font-bold text-lg">Notifications</h3>
+            <button onclick="closeNotifications()" class="text-gray-400 hover:text-gray-600">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div id="notificationList" class="divide-y">
+            <!-- Notifications will be loaded dynamically -->
+        </div>
+    </div>
+    
+    <!-- Achievement Toast -->
+    <div id="achievementToast" class="hidden fixed top-20 right-6 bg-gradient-to-r from-yellow-400 to-orange-500 text-white p-4 rounded-lg shadow-2xl z-50 animate-slide-in-right">
+        <div class="flex items-center space-x-3">
+            <i class="fas fa-trophy text-2xl"></i>
+            <div>
+                <h4 class="font-bold">Achievement Unlocked!</h4>
+                <p id="achievementText" class="text-sm"></p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script src="js/gamification.js"></script>
+</body>
+</html>

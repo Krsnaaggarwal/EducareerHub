@@ -10,8 +10,6 @@
 
 **Technology Stack:** HTML5, CSS3, JavaScript (ES6+), Chart.js, Tailwind CSS
 
-**Project Duration:** [Add your timeline]
-
 **Submitted By:** Krishna Aggarwal & Kushal Goswami
 
 **Roll No:** 2402200100027 & 2402200100028

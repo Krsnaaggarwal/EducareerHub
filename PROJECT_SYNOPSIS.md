@@ -677,7 +677,7 @@ Through this project, the following skills were developed:
 
 ## 📞 PROJECT CONTACT
 
-**Project Repository:** 
+**Project Repository:** https://github.com/Krsnaaggarwal/EducareerHub 
 
 **Live Demo:** https://ixsljvcf.gensparkspace.com/
 

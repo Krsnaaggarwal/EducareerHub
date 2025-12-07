@@ -14,13 +14,13 @@
 
 **Submitted By:** Krishna Aggarwal & Kushal Goswami
 
-**Enrollment No:** 2402200100027
+**Roll No:** 2402200100027 & 2402200100028
 
 **Department:** B.Tech CSE
 
 **Institution:** Hi-Tech Institute of Engineering & Technology
 
-**Submission Date:** December 2024
+**Submission Date:**   December 2024
 
 ---
 
@@ -677,15 +677,15 @@ Through this project, the following skills were developed:
 
 ## 📞 PROJECT CONTACT
 
-**Project Repository:** [GitHub/GitLab URL]
+**Project Repository:** 
 
-**Live Demo:** 
+**Live Demo:** https://ixsljvcf.gensparkspace.com/
 
 **Email:** aggarwalkrishna850@gmail.com
 
-**LinkedIn:** [Your LinkedIn Profile]
+**LinkedIn:** https://www.linkedin.com/in/krishna-aggarwal-0b8801363?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3BBXA3zxkcRNii%2BnNQa2IG9g%3D%3D
 
-**GitHub:** [Your GitHub Profile]
+**GitHub:** krsnaaggarwal
 
 ---
 

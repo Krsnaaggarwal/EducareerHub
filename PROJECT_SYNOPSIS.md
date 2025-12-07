@@ -12,13 +12,13 @@
 
 **Project Duration:** [Add your timeline]
 
-**Submitted By:** [Your Name]
+**Submitted By:** Krishna Aggarwal & Kushal Goswami
 
-**Enrollment No:** [Your Enrollment Number]
+**Enrollment No:** 2402200100027
 
-**Department:** [Your Department]
+**Department:** B.Tech CSE
 
-**Institution:** [Your College Name]
+**Institution:** Hi-Tech Institute of Engineering & Technology
 
 **Submission Date:** December 2024
 
@@ -679,9 +679,9 @@ Through this project, the following skills were developed:
 
 **Project Repository:** [GitHub/GitLab URL]
 
-**Live Demo:** [Deployment URL]
+**Live Demo:** 
 
-**Email:** [your.email@example.com]
+**Email:** aggarwalkrishna850@gmail.com
 
 **LinkedIn:** [Your LinkedIn Profile]
 
